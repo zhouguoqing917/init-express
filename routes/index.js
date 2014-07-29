@@ -10,6 +10,10 @@ var express = require('express'),
  */
 var indexRouter = express.Router();
 
+indexRouter.all('/secure/*', function(req, res, next) {
+    res.status(403).send('Secure. Not allowed.');
+});
+
 /**
  * this accepts all request methods to the `/` path
  */

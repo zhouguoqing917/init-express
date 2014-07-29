@@ -1,28 +1,24 @@
 var config = {
-    development: {
-        server: {
-            port: 3000,
+    serverport: 3000,
+    livereloadport: 35729,
+    paths: {
+        lib: {
+            css: [
+                "bootstrap-sass/dist/css/bootstrap.css",
+                "bootstrap-sass/dist/css/bootstrap-theme.css"
+            ],
+            js: [
+                "bootstrap-sass/dist/js/bootstrap.js"
+            ]
         },
-        database: {
-            url: 'mongodb://localhost/e4-generated_dev'
-        }
-    },
-    testing: {
-        server: {
-            port: 3001
-        },
-        database: {
-            url: 'mongodb://localhost/e4-generated_test'
-        }
-    },
-    production: {
-        server: {
-            port: 8080
-        },
-        database: {
-            url: 'mongodb://localhost/e4-generated'
+        app: {
+            scss: "public/scss",
+            css: "public/css",
+            js: [
+                "public/js"
+            ]
         }
     }
 };
 
-module.exports = config[process.env.NODE_ENV || 'development'];
+module.exports = config;

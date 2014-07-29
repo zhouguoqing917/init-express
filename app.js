@@ -1,4 +1,5 @@
 var express = require('express'),
+    config = require('./config'),
     path = require('path'),
     helmet = require('helmet'),
     csrf = require('csurf'),
@@ -7,13 +8,10 @@ var express = require('express'),
     cookieSession = require('cookie-session'),
     methodOverride = require('method-override'),
     compress = require('compression'),
-    serverport = 3000,
-    routes = require('./routes');
+    routes = require('./routes'),
+    app = express();
 
-
-var app = express();
-
-app.set('port', (process.env.PORT || serverport));
+app.set('port', (process.env.PORT || config.serverport));
 app.use(compress());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -46,29 +44,7 @@ app.log = function(message) {
     console.log(new Date().getTime() + ': ' + message);
 };
 
-app.all('/secure/*', function(req, res, next) {
-    res.status(403).send('Secure. Not allowed.');
-});
-
-/*
- *
- * ADD ROUTES HERE
- *
- */
-
-// app.get('/', function(req, res) {
-//     res.render('index');
-// });
-
-
-/*
- *
- * SERVER STUFF
- *
- */
-
-
-app.use('static', express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(routes.indexRouter);
 
 app.use(function(req, res) {
