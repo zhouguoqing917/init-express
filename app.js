@@ -14,8 +14,8 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     app = express();
 
-// app.set('env', 'production');
-// console.log(app.get('env'));
+app.set('env', 'production');
+console.log(app.get('env'));
 
 app.set('port', (process.env.PORT || config.serverport));
 app.set('views', path.join(__dirname, 'views'));

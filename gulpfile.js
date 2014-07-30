@@ -10,8 +10,8 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     livereload = require('gulp-livereload');
 
-// server.set('env', 'development');
-// console.log(server.get('env'));
+server.set('env', 'development');
+console.log(server.get('env'));
 
 gulp.task('clean', function() {
     console.log('clean finished');
@@ -29,7 +29,6 @@ gulp.task('build', [
 gulp.task('watch', ['build'], function() {
     gulp.watch(config.paths.app.scss + '/*', ['styles']);
     gulp.watch(config.paths.app.js + '/*.js', ['scripts']);
-    // gulp.watch('./views/**/*.jade', ['inject']);
     gulp
         .src([
             config.paths.app.css + '/**.*',
@@ -66,13 +65,13 @@ gulp.task('styles', function() {
 });
 
 gulp.task('scripts', function() {
-        gulp.src(config.paths.lib.js)
-            .pipe(concat('libs.js'))
-            .pipe(gulp.dest(config.paths.app.js));
+    gulp.src(config.paths.lib.js)
+        .pipe(concat('libs.js'))
+        .pipe(gulp.dest(config.paths.app.js));
 
-        gulp.src(config.paths.app.js)
-            .pipe(concat('app.js'))
-            .pipe(gulp.dest(config.paths.app.js));
+    gulp.src(config.paths.app.js)
+        .pipe(concat('app.js'))
+        .pipe(gulp.dest(config.paths.app.js));
 
 });
 
