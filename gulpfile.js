@@ -4,7 +4,14 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     concat = require('gulp-concat'),
     autoprefixer = require('gulp-autoprefixer'),
-    streamqueue = require('streamqueue');
+    jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish'),
+    streamqueue = require('streamqueue'),
+    watch = require('gulp-watch'),
+    livereload = require('gulp-livereload');
+
+// server.set('env', 'development');
+// console.log(server.get('env'));
 
 gulp.task('clean', function() {
     console.log('clean finished');
@@ -21,8 +28,16 @@ gulp.task('build', [
 
 gulp.task('watch', ['build'], function() {
     gulp.watch(config.paths.app.scss + '/*', ['styles']);
-    gulp.watch(config.paths.app.js + '/*.js', ['scripts', 'lint']);
+    gulp.watch(config.paths.app.js + '/*.js', ['scripts']);
     // gulp.watch('./views/**/*.jade', ['inject']);
+    gulp
+        .src([
+            config.paths.app.css + '/**.*',
+            config.paths.app.js + '/**/*',
+            config.paths.app.views + '/**/*.jade'
+        ])
+        .pipe(watch())
+        .pipe(livereload());
 });
 
 gulp.task('styles', function() {
@@ -33,16 +48,36 @@ gulp.task('styles', function() {
         gulp.src(config.paths.lib.css),
         gulp.src(config.paths.app.scss + '/*.scss')
         .pipe(sass({
-            includePaths: ['./public/scss']
+            includePaths: ['./' + config.paths.app.scss]
         }))
     )
         .pipe(concat('style.css'))
+        .pipe(autoprefixer(
+            'last 2 version',
+            'safari 5',
+            'ie 8',
+            'ie 9',
+            'opera 12.1',
+            'ios 6',
+            'android 4'
+        ))
         .pipe(gulp.dest(config.paths.app.css));
 
 });
 
 gulp.task('scripts', function() {
-    console.log('scripts finished');
+        gulp.src(config.paths.lib.js)
+            .pipe(concat('libs.js'))
+            .pipe(gulp.dest(config.paths.app.js));
 
+        gulp.src(config.paths.app.js)
+            .pipe(concat('app.js'))
+            .pipe(gulp.dest(config.paths.app.js));
 
+});
+
+gulp.task('lint', function() {
+    gulp.src(config.paths.app.js + '/*.js')
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter(stylish));
 });

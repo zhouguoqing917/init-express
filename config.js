@@ -4,19 +4,19 @@ var config = {
     paths: {
         lib: {
             css: [
-                "bootstrap-sass/dist/css/bootstrap.css",
-                "bootstrap-sass/dist/css/bootstrap-theme.css"
+                'bower_components/bootstrap-sass/dist/css/bootstrap.css',
+                'bower_components/bootstrap-sass/dist/css/bootstrap-theme.css'
             ],
             js: [
-                "bootstrap-sass/dist/js/bootstrap.js"
+                'bower_components/bootstrap-sass/dist/js/bootstrap.js',
+                'bower_components/jquery/dist/jquery.js'
             ]
         },
         app: {
-            scss: "public/scss",
-            css: "public/css",
-            js: [
-                "public/js"
-            ]
+            views: './views',
+            scss: 'public/scss',
+            css: 'public/css',
+            js: 'public/js'
         }
     }
 };

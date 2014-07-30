@@ -14,18 +14,21 @@ var express = require('express'),
     errorHandler = require('errorhandler'),
     app = express();
 
+// app.set('env', 'production');
+// console.log(app.get('env'));
+
 app.set('port', (process.env.PORT || config.serverport));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-// app.set('case sensitive routing', true);
+app.set('case sensitive routing', true);
 app.use(favicon('favicon.ico'));
-// app.use(logger('dev'));
-// app.use(compress());
+app.use(logger('dev'));
+app.use(compress());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-// app.use(helmet());
+app.use(helmet());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes.indexRouter);
@@ -33,27 +36,27 @@ app.use(function(req, res) {
     res.status(404).send('404 - No route or static file matched ' + req.url + '.');
 });
 
-// if (app.get('env') === 'development') {
-//     app.use(errorHandler());
-// }
+if (app.get('env') === 'development') {
+    app.use(errorHandler());
+}
 
-// app.use(cookieParser('guess me'));
-// app.use(cookieSession({
-//     secret: 'dant guess me',
-// }));
+app.use(cookieParser('guess me'));
+app.use(cookieSession({
+    secret: 'dant guess me',
+}));
 
 // CSRF Protection
-// app.use(csrf());
-// app.use(function(req, res, next) {
-//     res.cookie('XSRF-TOKEN', req.csrfToken());
-//     res.locals.csrf_token = req.csrfToken();
-//     next();
-// });
+app.use(csrf());
+app.use(function(req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.locals.csrf_token = req.csrfToken();
+    next();
+});
 
-// app.use(function(req, res, next) {
-//     app.log(req.method + ': ' + req.url + ' ');
-//     next();
-// });
+app.use(function(req, res, next) {
+    app.log(req.method + ': ' + req.url + ' ');
+    next();
+});
 
 app.log = function(message) {
     console.log(new Date().getTime() + ': ' + message);

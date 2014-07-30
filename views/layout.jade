@@ -13,6 +13,8 @@ html
           a.navbar-brand(href='#')= title
     .container
       block content
-    //- if settings.env == 'development'
-      script(src='http://localhost:35729/livereload.js')
-    //- script(src='/js/app.min.js')
+
+//- if settings.env == 'development'
+script(src='http://localhost:35729/livereload.js')
+script(src='/js/libs.js')
+script(src='/js/app.js')
