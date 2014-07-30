@@ -8,8 +8,8 @@ var config = {
                 'bower_components/bootstrap-sass/dist/css/bootstrap-theme.css'
             ],
             js: [
-                'bower_components/bootstrap-sass/dist/js/bootstrap.js',
-                'bower_components/jquery/dist/jquery.js'
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/bootstrap-sass/dist/js/bootstrap.js'
             ]
         },
         app: {

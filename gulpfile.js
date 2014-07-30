@@ -41,9 +41,7 @@ gulp.task('watch', ['build'], function() {
 
 gulp.task('styles', function() {
 
-    return streamqueue({
-            objectMode: true
-        },
+    return streamqueue({ objectMode: true },
         gulp.src(config.paths.lib.css),
         gulp.src(config.paths.app.scss + '/*.scss')
         .pipe(sass({
