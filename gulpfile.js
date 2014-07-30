@@ -8,18 +8,28 @@ var gulp = require('gulp'),
     stylish = require('jshint-stylish'),
     streamqueue = require('streamqueue'),
     watch = require('gulp-watch'),
+    rimraf = require('gulp-rimraf'),
     livereload = require('gulp-livereload');
 
 server.set('env', 'development');
 console.log(server.get('env'));
 
 gulp.task('clean', function() {
-    console.log('clean finished');
+    return gulp.src([
+        config.paths.app.css + '/style.css',
+        config.paths.app.js + '/libs.js'
+    ], {
+        read: false
+    })
+        .pipe(rimraf({
+            force: true
+        }));
 });
 
-gulp.task('default', ['clean'], function() {
-    gulp.start('watch');
-});
+gulp.task('default', ['clean'],
+    function() {
+        gulp.start('watch');
+    });
 
 gulp.task('build', [
     'styles',
@@ -41,7 +51,9 @@ gulp.task('watch', ['build'], function() {
 
 gulp.task('styles', function() {
 
-    return streamqueue({ objectMode: true },
+    return streamqueue({
+            objectMode: true
+        },
         gulp.src(config.paths.lib.css),
         gulp.src(config.paths.app.scss + '/*.scss')
         .pipe(sass({

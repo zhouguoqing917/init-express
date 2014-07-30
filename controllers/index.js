@@ -5,6 +5,6 @@
 
 exports.index = function (req, res) {
   res.render('index', {
-    title: 'NFTA Dashboard'
+    title: 'init-express-4'
   });
 };
