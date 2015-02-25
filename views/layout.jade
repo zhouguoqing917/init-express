@@ -1,20 +1,13 @@
 doctype html
 html
-  head
-    title= title
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge, chrome=1')
-    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
-    link(rel='stylesheet', href='/css/style.css')
-  body
-    nav.navabar.navbar-default(role='navigation')
-      .container
-        .navbar-header
-          a.navbar-brand(href='#')= title
-    .container.well
-      block content
-
-if settings.env == 'development'
-    script(src='http://localhost:35729/livereload.js')
-script(src='/js/libs.js')
-script(src='/js/app.js')
+    head
+        title= title
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge, chrome=1')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+        include _styles
+        script(src='files/modernizr.js')
+    body
+        h1= title
+        block content
+        include _scripts
